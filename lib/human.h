@@ -77,7 +77,10 @@ enum
   human_SI = 128,
 
   /* Append "B" (if base 1000) or "iB" (if base 1024) to SI prefix.  */
-  human_B = 256
+  human_B = 256,
+
+  /* Use the format specified by the user's locale */
+  human_locale = 512
 };
 
 char *human_readable (uintmax_t, char *, int, uintmax_t, uintmax_t);

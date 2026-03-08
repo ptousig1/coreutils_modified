@@ -411,7 +411,7 @@ default_block_size (void)
 static strtol_error
 humblock (char const *spec, uintmax_t *block_size, int *options)
 {
-  int opts = 0;
+  int opts = human_group_digits;
 
   if (! spec
       && ! (spec = getenv ("BLOCK_SIZE"))

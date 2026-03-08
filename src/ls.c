@@ -125,7 +125,8 @@
 
 #define AUTHORS \
   proper_name ("Richard M. Stallman"), \
-  proper_name ("David MacKenzie")
+  proper_name ("David MacKenzie"), \
+  proper_name ("Patrick Tousignant")
 
 #define obstack_chunk_alloc malloc
 #define obstack_chunk_free free
@@ -855,6 +856,7 @@ enum
   AUTHOR_OPTION = CHAR_MAX + 1,
   BLOCK_SIZE_OPTION,
   COLOR_OPTION,
+  COMMA_DELIMITER_OPTION,
   DEREFERENCE_COMMAND_LINE_SYMLINK_TO_DIR_OPTION,
   FILE_TYPE_INDICATOR_OPTION,
   FORMAT_OPTION,
@@ -879,9 +881,9 @@ static struct option const long_options[] =
   {"directory", no_argument, NULL, 'd'},
   {"dired", no_argument, NULL, 'D'},
   {"full-time", no_argument, NULL, FULL_TIME_OPTION},
-  {"group-directories-first", no_argument, NULL,
-   GROUP_DIRECTORIES_FIRST_OPTION},
+  {"group-directories-first", no_argument, NULL, GROUP_DIRECTORIES_FIRST_OPTION},
   {"human-readable", no_argument, NULL, 'h'},
+  {"comma-delimiter", no_argument, NULL, COMMA_DELIMITER_OPTION},
   {"inode", no_argument, NULL, 'i'},
   {"kibibytes", no_argument, NULL, 'k'},
   {"numeric-uid-gid", no_argument, NULL, 'n'},
@@ -896,8 +898,7 @@ static struct option const long_options[] =
   {"file-type", no_argument, NULL, FILE_TYPE_INDICATOR_OPTION},
   {"si", no_argument, NULL, SI_OPTION},
   {"dereference-command-line", no_argument, NULL, 'H'},
-  {"dereference-command-line-symlink-to-dir", no_argument, NULL,
-   DEREFERENCE_COMMAND_LINE_SYMLINK_TO_DIR_OPTION},
+  {"dereference-command-line-symlink-to-dir", no_argument, NULL, DEREFERENCE_COMMAND_LINE_SYMLINK_TO_DIR_OPTION},
   {"hide", required_argument, NULL, HIDE_OPTION},
   {"ignore", required_argument, NULL, 'I'},
   {"indicator-style", required_argument, NULL, INDICATOR_STYLE_OPTION},
@@ -2235,6 +2236,12 @@ decode_switches (int argc, char **argv)
             format_opt = one_per_line;
           print_with_color = false;
           quoting_style_opt = literal_quoting_style;
+          break;
+
+        case COMMA_DELIMITER_OPTION:
+          file_human_output_opts = human_output_opts =
+            human_group_digits;
+          file_output_block_size = output_block_size = 1;
           break;
 
         case_GETOPT_HELP_CHAR;
